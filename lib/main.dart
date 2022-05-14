@@ -4,6 +4,8 @@ import 'package:coco/views/dashboard/dashboardPage.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'components/customSnackBar.dart';
+
 void main() {
   runApp(const ProviderScope(child: MyApp()));
 }
@@ -15,6 +17,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: Strings.appName,
+      scaffoldMessengerKey: rootScaffoldMessengerKey,
+      debugShowCheckedModeBanner: false,
       theme: Palette.appTheme,
       themeMode: ThemeMode.system,
       home: const DashboardPage(),

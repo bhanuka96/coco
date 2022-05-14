@@ -1,7 +1,7 @@
 import 'package:coco/components/spacing.dart';
-import 'package:coco/state/cocoExplorer/cocoExplorerManager.dart';
 import 'package:coco/state/searchCategory/searchManager.dart';
 import 'package:coco/views/dashboard/widgets/appBar.dart';
+import 'package:coco/views/dashboard/widgets/listView.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../components/customError.dart';
@@ -9,6 +9,8 @@ import '../../components/customLoading.dart';
 import '../../components/customText.dart';
 import '../../constants/palette.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+
+import 'widgets/searchButton.dart';
 
 class DashboardPage extends HookConsumerWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -29,6 +31,7 @@ class DashboardPage extends HookConsumerWidget {
                 Expanded(
                   child: TextFormField(
                     controller: searchController,
+                    onChanged: (value) => value.isEmpty ? ref.read(chooseCategoryProvider.notifier).remove() : null,
                     decoration: const InputDecoration(
                       hintText: 'Search',
                       isDense: true,
@@ -37,23 +40,16 @@ class DashboardPage extends HookConsumerWidget {
                   ),
                 ),
                 const Spacing(width: 10),
-                ElevatedButton(
-                  onPressed: chooseCatState.isEmpty
-                      ? null
-                      : () {
-                          ref.read(cocoProvider.notifier).getData(ref.read(chooseCategoryProvider));
-                        },
-                  child: CustomText(text: 'Search', textColor: Palette.white),
-                )
+                SearchButtonWidget(length: chooseCatState.length)
               ],
             ),
             const Spacing(height: 10),
-            SizedBox(
-              height: 50,
-              child: ref.watch(searchCategoryProvider(search)).when(
-                  data: (data) {
-                    if ((data?.length ?? 0) == 0) return const SizedBox();
-                    return ListView.separated(
+            ref.watch(searchCategoryProvider(search)).when(
+                data: (data) {
+                  if ((data?.length ?? 0) == 0) return const SizedBox();
+                  return SizedBox(
+                    height: 50,
+                    child: ListView.separated(
                         itemCount: data?.length ?? 0,
                         scrollDirection: Axis.horizontal,
                         separatorBuilder: (_, int index) {
@@ -76,13 +72,15 @@ class DashboardPage extends HookConsumerWidget {
                               ),
                             ),
                           );
-                        });
-                  },
-                  error: (e, s) {
-                    return const CustomError();
-                  },
-                  loading: () => const LoadingWidget()),
-            )
+                        }),
+                  );
+                },
+                error: (e, s) {
+                  return const CustomError();
+                },
+                loading: () => const LoadingWidget()),
+            const Spacing(height: 10),
+            const ListViewWidget()
           ],
         ),
       ),

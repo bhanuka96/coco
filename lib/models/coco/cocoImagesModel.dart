@@ -1,22 +1,22 @@
 class CocoImagesModel {
   CocoImagesModel({
-    this.categoryId,
+    this.imageId,
     this.cocoUrl,
     this.flickrUrl,
   });
 
-  int? categoryId;
+  int? imageId;
   String? cocoUrl;
   String? flickrUrl;
 
   factory CocoImagesModel.fromJson(Map<String, dynamic> json) => CocoImagesModel(
-    categoryId: json["id"],
+    imageId: json["id"],
     cocoUrl: json["coco_url"],
     flickrUrl: json["flickr_url"],
   );
 
   Map<String, dynamic> toJson() => {
-    "id": categoryId,
+    "id": imageId,
     "coco_url": cocoUrl,
     "flickr_url": flickrUrl,
   };

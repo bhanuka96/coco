@@ -19,19 +19,19 @@ class CocoLoading extends CocoState {
 }
 
 class CocoLoaded extends CocoState {
-  final List<CocoModel?>? message;
+  final List<CocoModel?>? data;
 
-  const CocoLoaded(this.message);
+  const CocoLoaded(this.data);
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is CocoLoaded && other.message == message;
+    return other is CocoLoaded && other.data == data;
   }
 
   @override
-  int get hashCode => message.hashCode;
+  int get hashCode => data.hashCode;
 }
 
 class CocoError extends CocoState {

@@ -18,14 +18,15 @@ class CocoRepositoryImpl implements CocoRepository {
 
   @override
   Future<List<CocoModel?>?>? getData(List<int> id) async {
-    List<int>? _ids = await getImagesByCats(id);
-    if ((_ids?.length ?? 0) == 0) return null;
-    List<CocoImagesModel?>? _images = await getImages(_ids!);
-    if ((_images?.length ?? 0) == 0) return null;
-    List<CocoInstancesModel?>? _instances = await getInstances(_ids);
-    if ((_instances?.length ?? 0) == 0) return null;
-    List<CocoCaptionsModel?>? _captions = await getCaptions(_ids);
-    if ((_captions?.length ?? 0) == 0) return null;
+    List<int>? ids = await getImagesByCats(id);
+    if ((ids?.length ?? 0) == 0) return null;
+    List<CocoImagesModel?>? images = await getImages(ids!);
+    if ((images?.length ?? 0) == 0) return null;
+    List<CocoInstancesModel?>? instances = await getInstances(ids);
+    if ((instances?.length ?? 0) == 0) return null;
+    List<CocoCaptionsModel?>? captions = await getCaptions(ids);
+    if ((captions?.length ?? 0) == 0) return null;
+    return CocoModel().getData(captions: captions, images: images, instances: instances);
   }
 
   Future<List<int>?>? getImagesByCats(List<int> ids) async {

@@ -1,39 +1,10 @@
-import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
-import '../../core/exceptions/appException.dart';
-import '../../core/net/apiEndpoints.dart';
 import '../../models/categories/categoriesModel.dart';
 
 abstract class SearchRepository {
-  Future<List<dynamic>?>? search(List<String> category);
   List<Accessory> searchCategory(String name);
 }
 
 class SearchRepositoryImpl implements SearchRepository {
-  final Dio _dio;
-
-  SearchRepositoryImpl(this._dio);
-
-  @override
-  Future<List<dynamic>?>? search(List<String> category) async {
-    try {
-      // final response = await _dio.get(
-      //   '${APIEndpoints.baseUrl}/${APIEndpoints.search}',
-      //   cancelToken: cancelToken,
-      //   queryParameters: {'query': meta.query},
-      // );
-      // if (response.statusCode == 200) {
-      //   final results = List<Map<String, dynamic>>.from(response.data['data']);
-      //   return results;
-      //   // return results.map((data) => RestaurantModel.fromJson(data)).toList();
-      // }
-      return null;
-    } on DioError catch (dioError) {
-      debugPrint('error $dioError');
-      throw AppException.fromDioError(dioError);
-    }
-  }
-
   @override
   List<Accessory> searchCategory(String name) {
     Map<String,dynamic> categories = {
@@ -50,7 +21,6 @@ class SearchRepositoryImpl implements SearchRepository {
         }
       }
     }
-    print('calling api ${result.length}');
     return result;
   }
 }
